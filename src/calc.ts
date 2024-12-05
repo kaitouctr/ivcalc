@@ -325,23 +325,23 @@ function narrowByHiddenPower(
   spdIVRange: number[],
   targetHPType: string,
 ) {
-  const TYPES = {
-    0: 'Fighting',
-    1: 'Flying',
-    2: 'Poison',
-    3: 'Ground',
-    4: 'Rock',
-    5: 'Bug',
-    6: 'Ghost',
-    7: 'Steel',
-    8: 'Fire',
-    9: 'Water',
-    10: 'Grass',
-    11: 'Electric',
-    12: 'Psychic',
-    13: 'Ice',
-    14: 'Dragon',
-    15: 'Dark',
+  const HiddenPowerTypes = {
+    Fighting: 0,
+    Flying: 1,
+    Poison: 2,
+    Ground: 3,
+    Rock: 4,
+    Bug: 5,
+    Ghost: 6,
+    Steel: 7,
+    Fire: 8,
+    Water: 9,
+    Grass: 10,
+    Electric: 11,
+    Psychic: 12,
+    Ice: 13,
+    Dragon: 14,
+    Dark: 15,
   };
   const hpRange: Set<number> = new Set();
   const atkRange: Set<number> = new Set();
@@ -349,39 +349,30 @@ function narrowByHiddenPower(
   const speRange: Set<number> = new Set();
   const spaRange: Set<number> = new Set();
   const spdRange: Set<number> = new Set();
-  /*
-   *  Below loops through all possible combinations of LSBs of the
-   *  six stats. This creates a lookup table on the fly for
-   *  a specific hidden power.
-   */
-  for (const hpLSB of [0, 1]) {
-    for (const atkLSB of [0, 1]) {
-      for (const defLSB of [0, 1]) {
-        for (const speLSB of [0, 1]) {
-          for (const spaLSB of [0, 1]) {
-            for (const spdLSB of [0, 1]) {
-              const hpType = Math.floor(
-                ((hpLSB +
-                  2 * atkLSB +
-                  4 * defLSB +
-                  8 * speLSB +
-                  16 * spaLSB +
-                  32 * spdLSB) *
-                  15) /
-                  63,
-              );
-              if (!(TYPES[hpType] === targetHPType)) continue;
-              hpRange.add(hpLSB);
-              atkRange.add(atkLSB);
-              defRange.add(defLSB);
-              speRange.add(speLSB);
-              spaRange.add(spaLSB);
-              spdRange.add(spdLSB);
-            }
-          }
-        }
-      }
-    }
+
+  // In here, ivLSBs is the binary number formed from
+  // hpLSB + 2 * atkLSB + 4 * defLSB + 8 * speLSB + 16 * spaLSB + 32 * spdLSB
+  // in the hidden power formula
+  // 4.2 is calculated from 1 / (15 / 63) which is the remaining part of the
+  // equation after removing ivLSBs from it
+  // Based off https://math.stackexchange.com/a/1683536
+
+  // lower limit of ivLSBs for target type
+  const y = Math.ceil(4.2 * HiddenPowerTypes[targetHPType]);
+  // upper limit of ivLSBs + 1
+  const z = Math.ceil(4.2 * (HiddenPowerTypes[targetHPType] + 1));
+  const xRange: number[] = [];
+  // Enforce upper limit of 63
+  for (let i = y; i < (z <= 64 ? z : 64); i++) {
+    xRange.push(i);
+  }
+  for (const ivLSBs of xRange) {
+    hpRange.add(ivLSBs & 1);
+    atkRange.add((ivLSBs >> 1) & 1);
+    defRange.add((ivLSBs >> 2) & 1);
+    speRange.add((ivLSBs >> 3) & 1);
+    spaRange.add((ivLSBs >> 4) & 1);
+    spdRange.add((ivLSBs >> 5) & 1);
   }
   return [
     hpIVRange.filter(iv => hpRange.has(iv & 1)),
