@@ -163,196 +163,19 @@
           </div>
           <fieldset id="statsInput">
             <div
-              id="initialStatsInputGroup"
-              class="statsInput"
-            >
-              <label for="initialLevel">Level</label>
-              <label for="initialHP">HP</label>
-              <label for="initialAtk">Attack</label>
-              <label for="initialDef">Defense</label>
-              <label for="initialSpA">Sp.Atk</label>
-              <label for="initialSpD">Sp.Def</label>
-              <label for="initialSpe">Speed</label>
-              <input
-                id="initialLevel"
-                type="number"
-                min="1"
-                max="100"
-                name="initialLevel"
-                required
-              />
-              <!-- Maximum possible HP from this formula: 
-                         (⌊(2 ✕ 255 + 31 + ⌊252 ÷ 4⌋) ✕ 100) ÷ 100⌋ + 100 + 10 = 714 -->
-              <input
-                id="initialHP"
-                type="number"
-                min="1"
-                max="714"
-                name="initialHP"
-                required
-              />
-              <!-- Maximum possible for all other stats: 
-                         ((⌊(2 ✕ 255 + 31 + ⌊252 ÷ 4⌋) ✕ 100) ÷ 100⌋ + 5) ✕ 1.1 = 669 -->
-              <input
-                id="initialAtk"
-                type="number"
-                min="1"
-                max="669"
-                name="initialAtk"
-                required
-              />
-              <input
-                id="initialDef"
-                type="number"
-                min="1"
-                max="669"
-                name="initialDef"
-                required
-              />
-              <input
-                id="initialSpA"
-                type="number"
-                min="1"
-                max="669"
-                name="initialSpA"
-                required
-              />
-              <input
-                id="initialSpD"
-                type="number"
-                min="1"
-                max="669"
-                name="initialSpD"
-                required
-              />
-              <input
-                id="initialSpe"
-                type="number"
-                min="1"
-                max="669"
-                name="initialSpe"
-                required
-              />
-              <div></div>
-              <label
-                for="initialHPEV"
-                class="initialEVSettings"
-                hidden
-                >HP</label
-              >
-              <label
-                for="initialAtkEV"
-                class="initialEVSettings"
-                hidden
-                >Attack</label
-              >
-              <label
-                for="initialDefEV"
-                class="initialEVSettings"
-                hidden
-                >Defense</label
-              >
-              <label
-                for="initialSpAEV"
-                class="initialEVSettings"
-                hidden
-                >Sp.Atk</label
-              >
-              <label
-                for="initialSpDEV"
-                class="initialEVSettings"
-                hidden
-                >Sp.Def</label
-              >
-              <label
-                for="initialSpeEV"
-                class="initialEVSettings"
-                hidden
-                >Speed</label
-              >
-              <label
-                class="initialEVSettings"
-                hidden
-                >EVs:</label
-              >
-              <input
-                id="initialHPEV"
-                type="number"
-                min="0"
-                max="252"
-                value="0"
-                size="1"
-                name="initialHPEV"
-                class="initialEVSettings"
-                hidden
-                disabled
-              />
-              <input
-                id="initialAtkEV"
-                type="number"
-                min="0"
-                max="252"
-                value="0"
-                size="1"
-                name="initialAtkEV"
-                class="initialEVSettings"
-                hidden
-                disabled
-              />
-              <input
-                id="initialDefEV"
-                type="number"
-                min="0"
-                max="252"
-                value="0"
-                size="1"
-                name="initialDefEV"
-                class="initialEVSettings"
-                hidden
-                disabled
-              />
-              <input
-                id="initialSpAEV"
-                type="number"
-                min="0"
-                max="252"
-                value="0"
-                size="1"
-                name="initialSpAEV"
-                class="initialEVSettings"
-                hidden
-                disabled
-              />
-              <input
-                id="initialSpDEV"
-                type="number"
-                min="0"
-                max="252"
-                value="0"
-                size="1"
-                name="initialSpDEV"
-                class="initialEVSettings"
-                hidden
-                disabled
-              />
-              <input
-                id="initialSpeEV"
-                type="number"
-                min="0"
-                max="252"
-                value="0"
-                size="1"
-                name="initialSpeEV"
-                class="initialEVSettings"
-                hidden
-                disabled
-              />
-            </div>
-            <div
               id="levelStatsInputGroup"
               class="statsInput"
             >
               <div>
+                <label for="initialLevel">Initial Level</label><br />
+                <input
+                  id="initialLevel"
+                  type="number"
+                  min="1"
+                  max="100"
+                  name="initialLevel"
+                  required
+                /><br />
                 <input
                   type="radio"
                   name="calcMode"
@@ -376,14 +199,16 @@
                 <label for="considerEVsSwitch">Consider EVs</label>
               </div>
               <div id="levelStatsTextarea">
-                <label for="levelStats">Stats:</label>
+                <label for="levelStats">Stats</label>
                 <textarea
                   id="levelStats"
-                  cols="23"
+                  cols="40"
                   rows="10"
                   autocomplete="off"
                   wrap="off"
                   name="levelStats"
+                  placeholder="H A B C D S"
+                  required
                 ></textarea>
               </div>
             </div>

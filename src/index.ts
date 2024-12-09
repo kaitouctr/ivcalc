@@ -481,19 +481,9 @@ mainForm.addEventListener('submit', function (e) {
 
 useEVsSwitch.addEventListener('change', function () {
   if (this.checked) {
-    for (const element of document.querySelectorAll('.initialEVSettings')) {
-      (element as HTMLElement).hidden = false;
-      if (element.nodeName === 'INPUT') {
-        (element as HTMLInputElement).disabled = false;
-      }
-    }
+    statsInput.placeholder = 'H A B C D S EV-H EV-A EV-B EV-C EV-D EV-S';
   }
   if (!this.checked) {
-    for (const element of document.querySelectorAll('.initialEVSettings')) {
-      (element as HTMLElement).hidden = true;
-      if (element.nodeName === 'INPUT') {
-        (element as HTMLInputElement).disabled = true;
-      }
-    }
+    statsInput.placeholder = 'H A B C D S';
   }
 });
