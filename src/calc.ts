@@ -369,19 +369,15 @@ export function calcIVRanges(
           31,
         );
       } else {
-        minIV = NaN;
-        maxIV = NaN;
-      }
-      if (!Number.isNaN(minIV) && !Number.isNaN(maxIV)) {
-        if (minIV > minIVs[stat]) {
-          minIVs[stat] = minIV;
-        }
-        if (maxIV < maxIVs[stat]) {
-          maxIVs[stat] = maxIV;
-        }
-      } else {
         minIVs[stat] = NaN;
         maxIVs[stat] = NaN;
+        continue;
+      }
+      if (minIV > minIVs[stat]) {
+        minIVs[stat] = minIV;
+      }
+      if (maxIV < maxIVs[stat]) {
+        maxIVs[stat] = maxIV;
       }
     }
   }
@@ -399,19 +395,14 @@ export function calcIVRanges(
           ivRange.splice(i, 1);
         }
       }
+      minIVs[stat] = ivRange[0] ?? NaN;
+      maxIVs[stat] = ivRange[ivRange.length - 1] ?? NaN;
     }
   }
   if (characteristicInput !== null && characteristicInput in Characteristics) {
     const highestStat: Stat = Characteristics[characteristicInput].Stat;
     const ivModulo = Characteristics[characteristicInput].IVModulo;
-    let highestIV = Math.max(
-      ...ivRanges.HP,
-      ...ivRanges.Attack,
-      ...ivRanges.Defense,
-      ...ivRanges.SpAttack,
-      ...ivRanges.SpDefense,
-      ...ivRanges.Speed,
-    );
+    let highestIV = Math.max(...Object.values(maxIVs));
     if (highestIV % 5 > ivModulo) {
       highestIV -= (highestIV % 5) - ivModulo;
     }
