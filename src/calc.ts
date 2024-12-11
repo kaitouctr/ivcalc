@@ -323,6 +323,9 @@ export function calcIVRanges(
       if (Number.isNaN(minIVs[stat]) || Number.isNaN(maxIVs[stat])) {
         continue;
       }
+      if (isShedinja && stat === 'HP') {
+        continue;
+      }
       const statCalc = stat === 'HP' ? calcHPStat : calcOtherStat;
       const lowerBound = statCalc(
         baseStats[stat],
